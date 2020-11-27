@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Phreno/hexagonal_grid/issues"
   },
-  "homepage": "https://github.com/Phreno/hexagonal_grid#readme"
+  "homepage": "https://github.com/Phreno/hexagonal_grid#readme",
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1"
+  }
 }
