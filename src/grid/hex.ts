@@ -1,6 +1,6 @@
 export class Hex {
   constructor(public q: number, public r: number, public s: number) {
-    if (Math.round(q + r + s) !== 0) throw "q + r + s must be 0";
+    if (Math.round(q + r + s) !== 0) throw Error("q + r + s must be 0");
   }
 
   public add(b: Hex): Hex {
@@ -56,17 +56,17 @@ export class Hex {
 
 
   public round(): Hex {
-    var qi: number = Math.round(this.q);
-    var ri: number = Math.round(this.r);
-    var si: number = Math.round(this.s);
-    var q_diff: number = Math.abs(qi - this.q);
-    var r_diff: number = Math.abs(ri - this.r);
-    var s_diff: number = Math.abs(si - this.s);
-    if (q_diff > r_diff && q_diff > s_diff) {
+    let qi: number = Math.round(this.q);
+    let ri: number = Math.round(this.r);
+    let si: number = Math.round(this.s);
+    const qDiff: number = Math.abs(qi - this.q);
+    const rDiff: number = Math.abs(ri - this.r);
+    const sDiff: number = Math.abs(si - this.s);
+    if (qDiff > rDiff && qDiff > sDiff) {
       qi = -ri - si;
     }
     else
-      if (r_diff > s_diff) {
+      if (rDiff > sDiff) {
         ri = -qi - si;
       }
       else {
@@ -82,13 +82,13 @@ export class Hex {
 
 
   public linedraw(b: Hex): Hex[] {
-    var N: number = this.distance(b);
-    var a_nudge: Hex = new Hex(this.q + 1e-06, this.r + 1e-06, this.s - 2e-06);
-    var b_nudge: Hex = new Hex(b.q + 1e-06, b.r + 1e-06, b.s - 2e-06);
-    var results: Hex[] = [];
-    var step: number = 1.0 / Math.max(N, 1);
-    for (var i = 0; i <= N; i++) {
-      results.push(a_nudge.lerp(b_nudge, step * i).round());
+    const N: number = this.distance(b);
+    const aNudge: Hex = new Hex(this.q + 1e-06, this.r + 1e-06, this.s - 2e-06);
+    const bNudge: Hex = new Hex(b.q + 1e-06, b.r + 1e-06, b.s - 2e-06);
+    const results: Hex[] = [];
+    const step: number = 1.0 / Math.max(N, 1);
+    for (let i = 0; i <= N; i++) {
+      results.push(aNudge.lerp(bNudge, step * i).round());
     }
     return results;
   }
