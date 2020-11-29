@@ -4,7 +4,10 @@
   "description": "[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/Phreno/hexagonal_grid)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --build tsconfig.json",
+    "release": "tsc --build tsconfig_release.json",
+    "flush": "git clean -df"
   },
   "repository": {
     "type": "git",
