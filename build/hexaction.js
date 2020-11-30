@@ -1,6 +1,8 @@
-export * as DoubledCoord from "./grid/double-offset-coord";
-export * as Hex from "./grid/hex";
-export * as Layout from "./grid/layout";
-export * as OffsetCoord from "./grid/offset-coord";
-export * as Orientation from "./grid/orientation";
-export * as Point from "./grid/point";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DoubleOffsetCoord = require("./grid/double-offset-coord");
+exports.Hex = require("./grid/hex");
+exports.Layout = require("./grid/layout");
+exports.OffsetCoord = require("./grid/offset-coord");
+exports.Orientation = require("./grid/orientation");
+exports.Point = require("./grid/point");

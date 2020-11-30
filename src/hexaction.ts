@@ -1,6 +1,6 @@
-export * as DoubledCoord from "./grid/double-offset-coord";
-export * as  Hex from "./grid/hex";
-export * as  Layout from "./grid/layout";
-export * as  OffsetCoord from "./grid/offset-coord";
-export * as  Orientation from "./grid/orientation";
-export * as  Point from "./grid/point";
+export import DoubleOffsetCoord = require('./grid/double-offset-coord');
+export import Hex = require('./grid/hex');
+export import Layout = require('./grid/layout');
+export import OffsetCoord = require('./grid/offset-coord');
+export import Orientation = require('./grid/orientation');
+export import Point = require('./grid/point');

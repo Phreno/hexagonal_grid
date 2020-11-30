@@ -1,5 +1,8 @@
-import { Hex } from "./hex";
-export class OffsetCoord {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.OffsetCoord = void 0;
+const hex_1 = require("./hex");
+class OffsetCoord {
     constructor(col, row) {
         this.col = col;
         this.row = row;
@@ -19,7 +22,7 @@ export class OffsetCoord {
         if (offset !== OffsetCoord.EVEN && offset !== OffsetCoord.ODD) {
             throw Error("offset must be EVEN (+1) or ODD (-1)");
         }
-        return new Hex(q, r, s);
+        return new hex_1.Hex(q, r, s);
     }
     static roffsetFromCube(offset, h) {
         const col = h.q + (h.r + offset * (h.r & 1)) / 2;
@@ -36,8 +39,9 @@ export class OffsetCoord {
         if (offset !== OffsetCoord.EVEN && offset !== OffsetCoord.ODD) {
             throw Error("offset must be EVEN (+1) or ODD (-1)");
         }
-        return new Hex(q, r, s);
+        return new hex_1.Hex(q, r, s);
     }
 }
+exports.OffsetCoord = OffsetCoord;
 OffsetCoord.EVEN = 1;
 OffsetCoord.ODD = -1;
