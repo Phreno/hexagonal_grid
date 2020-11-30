@@ -7,4 +7,7 @@ FROM gitpod/workspace-full
 # More information: https://www.gitpod.io/docs/config-docker/
 
 USER gitpod
-RUN sudo apt-get install fonts-firacode -y
+RUN sudo apt-get update \
+  && sudo apt-get install -y \
+  fonts-firacode \
+  && sudo rm -rf /var/lib/apt/lists/*

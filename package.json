@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --build tsconfig.json",
     "release": "tsc --build tsconfig_release.json",
-    "flush": "git clean -df"
+    "flush": "git clean -df",
+    "serve": "npx http-server ./demo"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "gulp": "^4.0.2",
     "gulp-cli": "^2.3.0",
     "gulp-typescript": "^6.0.0-alpha.1",
+    "http-server": "^0.12.3",
     "tslint": "^6.1.3",
     "typescript": "^4.1.2"
   }
