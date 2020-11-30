@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.DoubledCoord = void 0;
-const hex_1 = require("./hex");
-class DoubledCoord {
+import { Hex } from "./hex";
+export class DoubledCoord {
     constructor(col, row) {
         this.col = col;
         this.row = row;
@@ -16,7 +13,7 @@ class DoubledCoord {
         const q = this.col;
         const r = (this.row - this.col) / 2;
         const s = -q - r;
-        return new hex_1.Hex(q, r, s);
+        return new Hex(q, r, s);
     }
     static rdoubledFromCube(h) {
         const col = 2 * h.q + h.r;
@@ -27,7 +24,6 @@ class DoubledCoord {
         const q = (this.col - this.row) / 2;
         const r = this.row;
         const s = -q - r;
-        return new hex_1.Hex(q, r, s);
+        return new Hex(q, r, s);
     }
 }
-exports.DoubledCoord = DoubledCoord;
