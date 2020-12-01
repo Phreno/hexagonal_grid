@@ -7,7 +7,7 @@ import { Hex } from "./grid/hex";
 import { Point } from "./grid/point"
 import { Diagram } from "./grid/diagram"
 
-export default {
+export {
   Layout,
   Hex,
   Point,
