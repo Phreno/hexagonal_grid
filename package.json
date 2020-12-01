@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --build tsconfig.json",
-    "browserify": "npx browserify build/hexaction.js -p esmify >> dist/hexaction.browser.js",
+    "browserify": "npx browserify build/hexaction.js -p esmify --standalone hexaction >> dist/hexaction.browser.js",
     "release": "npm run build && npm run browserify",
     "flush": "git clean -df",
     "start": "npx http-server ./demo --cors"
