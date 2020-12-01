@@ -7,6 +7,7 @@ import { Hex } from "./grid/hex";
 
 export * as Layout from "./grid/layout"
 export * as Hex from "./grid/hex"
+export * as Point from "./grid/point"
 
 export class Diagram {
   drawHex(ctx: CanvasRenderingContext2D, layout: Layout, hex: Hex) {
