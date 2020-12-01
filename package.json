@@ -10,7 +10,8 @@
     "prepare": "npm run build && npm run prepack && git add demo/hexaction.js dist/hexaction.bundle.js && git commit -m 'mise à jour du livrable' && git push",
     "clean": "rm -rf build",
     "start": "npx http-server demo --cors",
-    "fast.push": "git commit -am 'dev en cours' && git push"
+    "fast.push": "git commit -am 'dev en cours' && git push",
+    "fast.prepare": "npm run fast.push && npm run fast.prepare"
   },
   "repository": {
     "type": "git",
