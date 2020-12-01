@@ -4,6 +4,7 @@
 
 import { Layout } from "./grid/layout";
 import { Hex } from "./grid/hex";
+import { Point} from "./grid/point"
 
 export * as Layout from "./grid/layout"
 export * as Hex from "./grid/hex"
