@@ -8,7 +8,7 @@ import { Hex } from "./grid/hex";
 // This code is used to generate the diagrams on implementation.html
 
 /* global Hex, Layout, Point */
-export class Hexaction {
+export class Diagram {
   drawHex(ctx: CanvasRenderingContext2D, layout: Layout, hex: Hex) {
     const corners = layout.polygonCorners(hex);
     ctx.beginPath();
