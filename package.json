@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --build tsconfig.json",
     "prepack": "npx browserify build/hexaction.js -p esmify --standalone hexaction >> dist/hexaction.bundle.js && cp dist/hexaction.bundle.js demo/hexaction.js",
-    "prepare": "npm run build && npm prepack && git add demo/hexaction.js dist/hexaction.bundle.js && git commit -m 'mise à jour du livrable' && git push",
+    "prepare": "npm run build && npm run prepack && git add demo/hexaction.js dist/hexaction.bundle.js && git commit -m 'mise à jour du livrable' && git push",
     "clean": "rm -rf build",
     "start": "npx http-server demo --cors",
     "fast.push": "git commit -am 'dev en cours' && git push"
