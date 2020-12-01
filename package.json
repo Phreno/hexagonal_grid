@@ -24,6 +24,7 @@
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.1",
     "browserify": "^17.0.0",
+    "commander": "^6.2.0",
     "esmify": "^2.1.1",
     "gulp": "^4.0.2",
     "gulp-browserify": "^0.5.1",
