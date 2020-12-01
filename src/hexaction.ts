@@ -5,9 +5,9 @@
 import { Layout } from "./grid/layout";
 import { Hex } from "./grid/hex";
 
-// This code is used to generate the diagrams on implementation.html
+export * as Layout from "./grid/layout"
+export * as Hex from "./grid/hex"
 
-/* global Hex, Layout, Point */
 export class Diagram {
   drawHex(ctx: CanvasRenderingContext2D, layout: Layout, hex: Hex) {
     const corners = layout.polygonCorners(hex);
