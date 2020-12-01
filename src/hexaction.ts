@@ -4,11 +4,11 @@
 
 import { Layout } from "./grid/layout";
 import { Hex } from "./grid/hex";
-import { Point} from "./grid/point"
+import { Point } from "./grid/point"
 
-export * as Layout from "./grid/layout"
-export * as Hex from "./grid/hex"
-export * as Point from "./grid/point"
+export * from "./grid/layout"
+export * from "./grid/hex"
+export * from "./grid/point"
 
 export class Diagram {
   drawHex(ctx: CanvasRenderingContext2D, layout: Layout, hex: Hex) {
