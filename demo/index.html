@@ -9,26 +9,28 @@
 </head>
 
 <body>
-  <h1>Test hexaction</h1>
+	<h1>Test hexaction</h1>
 	<canvas id="layout-test-orientation-pointy"></canvas>
 	<canvas id="layout-test-orientation-flat"></canvas>
 	<script>
-    const diagram = new hexaction.Diagram();
+		const diagram = new hexaction.Diagram();
     const Layout = hexaction.Layout;
     const Point = hexaction.Point;
-		diagram.drawGrid(
-      "layout-test-orientation-pointy", 
-      "hsl(60, 10%, 90%)", 
-      true,
-      new Layout(Layout.pointy, new Point(25, 25), 
-      new Point(0, 0)));
+		
+    // diagram.drawGrid(
+    //   "layout-test-orientation-pointy", 
+    //   "hsl(60, 10%, 90%)", 
+    //   true,
+    //   new Layout(Layout.pointy, 
+    //   new Point(25, 25), 
+    //   new Point(0, 0)));
 
-    diagram.drawGrid(
-      "layout-test-orientation-flat", 
-      "hsl(60, 10%, 85%)", 
-      true,
-      new Layout(Layout.flat, new Point(25, 25), 
-      new Point(0, 0)));
+    // diagram.drawGrid(
+    //   "layout-test-orientation-flat", 
+    //   "hsl(60, 10%, 85%)", 
+    //   true,
+    //   new Layout(Layout.flat, new Point(25, 25), 
+    //   new Point(0, 0)));
 	</script>
 
 </body>
