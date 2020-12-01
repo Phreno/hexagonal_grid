@@ -8,7 +8,7 @@
     "build": "tsc --build tsconfig.json",
     "browserify": "npx browserify build/hexaction.js -p esmify --standalone hexaction >> dist/hexaction.bundle.js && cp dist/hexaction.bundle.js demo/hexation.js",
     "release": "npm run build && npm run browserify",
-    "flush": "git clean -df",
+    "clean": "rm -rf build",
     "start": "npx http-server ./demo --cors"
   },
   "repository": {
