@@ -6,14 +6,15 @@
 // export import Orientation = require('./grid/orientation');
 // export import Point = require('./grid/point');
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Point = exports.Orientation = exports.Layout = exports.Hex = exports.DoubleOffsetCoord = void 0;
 const DoubleOffsetCoord = require("./grid/double-offset-coord");
-exports.DoubleOffsetCoord = DoubleOffsetCoord;
 const Hex = require("./grid/hex");
-exports.Hex = Hex;
 const Layout = require("./grid/layout");
-exports.Layout = Layout;
 const Orientation = require("./grid/orientation");
-exports.Orientation = Orientation;
 const Point = require("./grid/point");
-exports.Point = Point;
+window.hexaction = {
+    DoubleOffsetCoord,
+    Hex,
+    Layout,
+    Orientation,
+    Point
+};

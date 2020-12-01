@@ -12,7 +12,7 @@ import OffsetCoord = require('./grid/offset-coord');
 import Orientation = require('./grid/orientation');
 import Point = require('./grid/point');
 
-export {
+(window as any).hexaction = {
   DoubleOffsetCoord,
   Hex,
   Layout,
