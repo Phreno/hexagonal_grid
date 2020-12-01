@@ -7,11 +7,9 @@ import { Hex } from "./grid/hex";
 import { Point } from "./grid/point"
 import { Diagram } from "./grid/diagram"
 
-export class Hexaction {
-  grid = {
-    Layout,
-    Hex,
-    Point,
-    Diagram
-  }
+export default {
+  Layout,
+  Hex,
+  Point,
+  Diagram
 }
