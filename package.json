@@ -9,7 +9,7 @@
     "browserify": "npx browserify build/hexaction.js -p esmify >> dist/hexaction.browser.js",
     "release": "npx gulp release",
     "flush": "git clean -df",
-    "start": "npx http-server ./demo"
+    "start": "npx http-server ./demo --cors"
   },
   "repository": {
     "type": "git",
