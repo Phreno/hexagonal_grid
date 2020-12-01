@@ -9,7 +9,7 @@
     "browserify": "npx browserify build/hexaction.js -p esmify --standalone hexaction >> dist/hexaction.bundle.js && cp dist/hexaction.bundle.js demo/hexaction.js",
     "release": "npm run build && npm run browserify && git add demo/hexaction.js dist/hexaction.bundle.js && git commit -m 'mise à jour du livrable' && git push",
     "clean": "rm -rf build",
-    "start": "npx http-server ./demo"
+    "start": "npx http-server ./demo/index.html"
   },
   "repository": {
     "type": "git",
