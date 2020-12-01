@@ -13,14 +13,15 @@
 	<canvas id="layout-test-orientation-pointy"></canvas>
 	<canvas id="layout-test-orientation-flat"></canvas>
 	<script>
-		drawGrid(
+    const diagram = new hexaction.Diagram();
+		diagram.drawGrid(
       "layout-test-orientation-pointy", 
       "hsl(60, 10%, 90%)", 
       true,
       new hexaction.Layout(Layout.pointy, new Point(25, 25), 
       new hexaction.Point(0, 0)));
 
-    drawGrid(
+    diagram.drawGrid(
       "layout-test-orientation-flat", 
       "hsl(60, 10%, 85%)", 
       true,
