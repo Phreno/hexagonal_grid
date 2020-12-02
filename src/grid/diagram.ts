@@ -1,12 +1,12 @@
-import { Layout } from "./layout";
-import { Hex } from "./hex";
+import { Layout } from './layout';
+import { Hex } from './hex';
 
 export class Diagram {
-  drawHex(ctx: CanvasRenderingContext2D, layout: Layout
+  drawHex (ctx: CanvasRenderingContext2D, layout: Layout
     , hex: Hex) {
     const corners = layout.polygonCorners(hex);
     ctx.beginPath();
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = 'black';
     ctx.lineWidth = 1;
     ctx.moveTo(corners[5].x, corners[5].y);
     for (let i = 0; i < 6; i++) {
@@ -15,59 +15,56 @@ export class Diagram {
     ctx.stroke();
   }
 
-
-  colorForHex(hex: Hex) {
+  colorForHex (hex: Hex) {
     // Match the color style used in the main article
     if (hex.q === 0 && hex.r === 0 && hex.s === 0) {
-      return "hsl(0, 50%, 0%)";
+      return 'hsl(0, 50%, 0%)';
     } else if (hex.q === 0) {
-      return "hsl(90, 70%, 35%)";
+      return 'hsl(90, 70%, 35%)';
     } else if (hex.r === 0) {
-      return "hsl(200, 100%, 35%)";
+      return 'hsl(200, 100%, 35%)';
     } else if (hex.s === 0) {
-      return "hsl(300, 40%, 50%)";
+      return 'hsl(300, 40%, 50%)';
     } else {
-      return "hsl(0, 0%, 50%)";
+      return 'hsl(0, 0%, 50%)';
     }
   }
 
-
-  drawHexLabel(ctx: CanvasRenderingContext2D, layout: Layout, hex: Hex) {
+  drawHexLabel (ctx: CanvasRenderingContext2D, layout: Layout, hex: Hex) {
     const pointSize = Math.round(0.5 * Math.min(Math.abs(layout.size.x), Math.abs(layout.size.y)));
     const center = layout.hexToPixel(hex);
     ctx.fillStyle = this.colorForHex(hex);
     ctx.font = `${pointSize}px sans-serif`;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(hex.len() === 0 ? "q,r,s" : (hex.q + "," + hex.r + "," + hex.s), center.x, center.y);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(hex.len() === 0 ? 'q,r,s' : (hex.q + ',' + hex.r + ',' + hex.s), center.x, center.y);
   }
 
-
-  permuteQRS(q: number, r: number, s: number) {
+  permuteQRS (q: number, r: number, s: number) {
     return new Hex(q, r, s);
   }
 
-  permuteSRQ(s: number, r: number, q: number) {
+  permuteSRQ (s: number, r: number, q: number) {
     return new Hex(q, r, s);
   }
 
-  permuteSQR(s: number, q: number, r: number) {
+  permuteSQR (s: number, q: number, r: number) {
     return new Hex(q, r, s);
   }
 
-  permuteRQS(r: number, q: number, s: number) {
+  permuteRQS (r: number, q: number, s: number) {
     return new Hex(q, r, s);
   }
 
-  permuteRSQ(r: number, s: number, q: number) {
+  permuteRSQ (r: number, s: number, q: number) {
     return new Hex(q, r, s);
   }
 
-  permuteQSR(q: number, s: number, r: number) {
+  permuteQSR (q: number, s: number, r: number) {
     return new Hex(q, r, s);
   }
 
-  shapeParallelogram(q1: number, r1: number, q2: number, r2: number, constructor: CallableFunction) {
+  shapeParallelogram (q1: number, r1: number, q2: number, r2: number, constructor: CallableFunction) {
     const hexes = [];
     for (let q = q1; q <= q2; q++) {
       for (let r = r1; r <= r2; r++) {
@@ -77,8 +74,7 @@ export class Diagram {
     return hexes;
   }
 
-
-  shapeTriangle1(size: number) {
+  shapeTriangle1 (size: number) {
     const hexes = [];
     for (let q = 0; q <= size; q++) {
       for (let r = 0; r <= size - q; r++) {
@@ -88,8 +84,7 @@ export class Diagram {
     return hexes;
   }
 
-
-  shapeTriangle2(size: number) {
+  shapeTriangle2 (size: number) {
     const hexes = [];
     for (let q = 0; q <= size; q++) {
       for (let r = size - q; r <= size; r++) {
@@ -99,8 +94,7 @@ export class Diagram {
     return hexes;
   }
 
-
-  shapeHexagon(size: number) {
+  shapeHexagon (size: number) {
     const hexes = [];
     for (let q = -size; q <= size; q++) {
       const r1 = Math.max(-size, -q - size);
@@ -112,8 +106,7 @@ export class Diagram {
     return hexes;
   }
 
-
-  shapeRectangle(w: number, h: number, constructor: CallableFunction) {
+  shapeRectangle (w: number, h: number, constructor: CallableFunction) {
     const hexes = [];
     const i1 = -Math.floor(w / 2);
     const i2 = i1 + w;
@@ -128,8 +121,7 @@ export class Diagram {
     return hexes;
   }
 
-
-  drawGrid(id: string, backgroundColor: string, withLabels: boolean, layout: Layout, hexes: Hex[]) {
+  drawGrid (id: string, backgroundColor: string, withLabels: boolean, layout: Layout, hexes: Hex[]) {
     const canvas = document.getElementById(id) as HTMLCanvasElement;
     if (!canvas) {
       return;
@@ -146,7 +138,7 @@ export class Diagram {
       ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
     }
 
-    if (hexes === undefined) {
+    if (!hexes) {
       hexes = this.shapeRectangle(15, 15, this.permuteQRS);
     }
 

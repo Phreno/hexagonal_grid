@@ -1,13 +1,13 @@
-import { Orientation } from "./orientation";
-import { Point } from "./point";
-import { Hex } from "./hex";
+import { Orientation } from './orientation';
+import { Point } from './point';
+import { Hex } from './hex';
 
 export class Layout {
-  constructor(public orientation: Orientation, public size: Point, public origin: Point) { }
+  constructor (public orientation: Orientation, public size: Point, public origin: Point) { }
   public static pointy: Orientation = new Orientation(Math.sqrt(3.0), Math.sqrt(3.0) / 2.0, 0.0, 3.0 / 2.0, Math.sqrt(3.0) / 3.0, -1.0 / 3.0, 0.0, 2.0 / 3.0, 0.5);
   public static flat: Orientation = new Orientation(3.0 / 2.0, 0.0, Math.sqrt(3.0) / 2.0, Math.sqrt(3.0), 2.0 / 3.0, 0.0, -1.0 / 3.0, Math.sqrt(3.0) / 3.0, 0.0);
 
-  public hexToPixel(h: Hex): Point {
+  public hexToPixel (h: Hex): Point {
     const M: Orientation = this.orientation;
     const size: Point = this.size;
     const origin: Point = this.origin;
@@ -16,8 +16,7 @@ export class Layout {
     return new Point(x + origin.x, y + origin.y);
   }
 
-
-  public pixelToHex(p: Point): Hex {
+  public pixelToHex (p: Point): Hex {
     const M: Orientation = this.orientation;
     const size: Point = this.size;
     const origin: Point = this.origin;
@@ -27,16 +26,14 @@ export class Layout {
     return new Hex(q, r, -q - r);
   }
 
-
-  public hexCornerOffset(corner: number): Point {
+  public hexCornerOffset (corner: number): Point {
     const M: Orientation = this.orientation;
     const size: Point = this.size;
     const angle: number = 2.0 * Math.PI * (M.startAngle - corner) / 6.0;
     return new Point(size.x * Math.cos(angle), size.y * Math.sin(angle));
   }
 
-
-  public polygonCorners(h: Hex): Point[] {
+  public polygonCorners (h: Hex): Point[] {
     const corners: Point[] = [];
     const center: Point = this.hexToPixel(h);
     for (let i = 0; i < 6; i++) {
