@@ -1,11 +1,12 @@
 {
   "defaultSeverity": "error",
-  "extends": [
-    "tslint:recommended"
-  ],
-  "jsRules": {},
+  "extends": "tslint-config-standard",
   "rules": {
-    "no-bitwise": false
+    "no-bitwise": false,
+    "semicolon": [
+      false,
+      "never"
+    ]
   },
   "rulesDirectory": []
 }
