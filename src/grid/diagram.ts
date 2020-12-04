@@ -1,67 +1,88 @@
 import { Layout } from './layout';
 import { Hex } from './hex';
 
+type DrawContext = {
+  canvasContext: CanvasRenderingContext2D
+  layout: Layout
+  hex: Hex
+};
+type DrawStyle = {
+  strokeStyle: string; lineWidth: number
+}
+const HEX_CORNERS = 6;
+const HEX_ORIGIN = 5;
+
+enum Color {
+  Stroke = 'black',
+  GridOrigin = 'hsl(0, 50%, 0%)',
+  HexQ= 'hsl(90, 70%, 35%)',
+  HexR= 'hsl(200, 100%, 35%)',
+  HexS= 'hsl(300, 40%, 50%)',
+  Hex= 'hsl(0, 0%, 50%)'
+}
 export class Diagram {
-  drawHex (ctx: CanvasRenderingContext2D, layout: Layout
-    , hex: Hex) {
-    const corners = layout.polygonCorners(hex);
-    ctx.beginPath();
-    ctx.strokeStyle = 'black';
-    ctx.lineWidth = 1;
-    ctx.moveTo(corners[5].x, corners[5].y);
-    for (let i = 0; i < 6; i++) {
-      ctx.lineTo(corners[i].x, corners[i].y);
+  drawHex ({ canvasContext, layout, hex ,strokeStyle= Color.Stroke,lineWidth= 1 }: DrawContext & Partial<DrawStyle>) {
+    const error = [canvasContext, layout, hex].filter(e => !e);
+    if (error) {
+      throw new Error('wrong args provided')
     }
-    ctx.stroke();
+    const corners = layout.polygonCorners(hex);
+    canvasContext.beginPath();
+    canvasContext.strokeStyle = strokeStyle;
+    canvasContext.lineWidth = lineWidth;
+    canvasContext.moveTo(corners[HEX_ORIGIN].x, corners[HEX_ORIGIN].y);
+    [...Array(HEX_CORNERS).keys()].forEach(index => canvasContext.lineTo(corners[index].x,
+    corners[index].y))
+    canvasContext.stroke();
   }
 
   colorForHex (hex: Hex) {
     // Match the color style used in the main article
     if (hex.q === 0 && hex.r === 0 && hex.s === 0) {
-      return 'hsl(0, 50%, 0%)';
+      return Color.GridOrigin;
     } else if (hex.q === 0) {
-      return 'hsl(90, 70%, 35%)';
+      return Color.HexQ;
     } else if (hex.r === 0) {
-      return 'hsl(200, 100%, 35%)';
+      return Color.HexR;
     } else if (hex.s === 0) {
-      return 'hsl(300, 40%, 50%)';
+      return Color.HexS;
     } else {
-      return 'hsl(0, 0%, 50%)';
+      return Color.Hex;
     }
   }
 
-  drawHexLabel (ctx: CanvasRenderingContext2D, layout: Layout, hex: Hex) {
+  drawHexLabel ({ canvasContext, layout, hex }: DrawContext) {
     const pointSize = Math.round(0.5 * Math.min(Math.abs(layout.size.x), Math.abs(layout.size.y)));
     const center = layout.hexToPixel(hex);
-    ctx.fillStyle = this.colorForHex(hex);
-    ctx.font = `${pointSize}px sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(hex.len() === 0 ? 'q,r,s' : (hex.q + ',' + hex.r + ',' + hex.s), center.x, center.y);
+    canvasContext.fillStyle = this.colorForHex(hex);
+    canvasContext.font = `${pointSize}px sans-serif`;
+    canvasContext.textAlign = 'center';
+    canvasContext.textBaseline = 'middle';
+    canvasContext.fillText(hex.len() === 0 ? 'q,r,s' : (hex.q + ',' + hex.r + ',' + hex.s), center.x, center.y);
   }
 
-  permuteQRS (q: number, r: number, s: number) {
+  permuteQRS ({ q, r, s }: Hex) {
     return new Hex(q, r, s);
   }
 
-  permuteSRQ (s: number, r: number, q: number) {
-    return new Hex(q, r, s);
+  permuteSRQ ({ q, r, s }: Hex) {
+    return new Hex(s, r, q);
   }
 
-  permuteSQR (s: number, q: number, r: number) {
-    return new Hex(q, r, s);
+  permuteSQR ({ q, r, s }: Hex) {
+    return new Hex(s,q,r);
   }
 
-  permuteRQS (r: number, q: number, s: number) {
-    return new Hex(q, r, s);
+  permuteRQS ({ q, r, s }: Hex) {
+    return new Hex(r,q,s);
   }
 
-  permuteRSQ (r: number, s: number, q: number) {
-    return new Hex(q, r, s);
+  permuteRSQ ({ q, r, s }: Hex) {
+    return new Hex(r,s,q);
   }
 
-  permuteQSR (q: number, s: number, r: number) {
-    return new Hex(q, r, s);
+  permuteQSR ({ q, r, s }: Hex) {
+    return new Hex(q,s,r);
   }
 
   shapeParallelogram (q1: number, r1: number, q2: number, r2: number, constructor: CallableFunction) {
@@ -126,8 +147,8 @@ export class Diagram {
     if (!canvas) {
       return;
     }
-    const ctx = canvas.getContext('2d');
-    if (!ctx) {
+    const canvasContext = canvas.getContext('2d');
+    if (!canvasContext) {
       return;
     }
     const width = canvas.width;
@@ -135,19 +156,19 @@ export class Diagram {
     if (window.devicePixelRatio && window.devicePixelRatio !== 1) {
       canvas.width = width * window.devicePixelRatio;
       canvas.height = height * window.devicePixelRatio;
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      canvasContext.scale(window.devicePixelRatio, window.devicePixelRatio);
     }
 
     if (!hexes) {
       hexes = this.shapeRectangle(15, 15, this.permuteQRS);
     }
 
-    ctx.fillStyle = backgroundColor;
-    ctx.fillRect(0, 0, width, height);
-    ctx.translate(width / 2, height / 2);
+    canvasContext.fillStyle = backgroundColor;
+    canvasContext.fillRect(0, 0, width, height);
+    canvasContext.translate(width / 2, height / 2);
     hexes.forEach((hex) => {
-      this.drawHex(ctx, layout, hex);
-      if (withLabels) this.drawHexLabel(ctx, layout, hex);
+      this.drawHex({ canvasContext,layout,hex });
+      if (withLabels) this.drawHexLabel({ canvasContext, layout, hex });
     });
   }
 }
