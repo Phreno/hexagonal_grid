@@ -4,8 +4,15 @@ import { Hex } from './hex';
 type DrawContext = {
   canvasContext: CanvasRenderingContext2D
   layout: Layout
+}
+
+type DrawHexContext = DrawContext & {
   hex: Hex
 };
+
+type DrawGridContext = DrawContext & {
+  hexes: Hex[]
+}
 type DrawStyle = {
   strokeStyle: string; lineWidth: number
 }
@@ -21,7 +28,7 @@ enum Color {
   Hex= 'hsl(0, 0%, 50%)'
 }
 export class Diagram {
-  drawHex ({ canvasContext, layout, hex ,strokeStyle= Color.Stroke,lineWidth= 1 }: DrawContext & Partial<DrawStyle>) {
+  drawHex ({ canvasContext, layout, hex ,strokeStyle= Color.Stroke,lineWidth= 1 }: DrawHexContext & Partial<DrawStyle>) {
     const error = [canvasContext, layout, hex].filter(e => !e);
     if (error) {
       throw new Error('wrong args provided')
@@ -51,7 +58,7 @@ export class Diagram {
     }
   }
 
-  drawHexLabel ({ canvasContext, layout, hex }: DrawContext) {
+  drawHexLabel ({ canvasContext, layout, hex }: DrawHexContext) {
     const pointSize = Math.round(0.5 * Math.min(Math.abs(layout.size.x), Math.abs(layout.size.y)));
     const center = layout.hexToPixel(hex);
     canvasContext.fillStyle = this.colorForHex(hex);
