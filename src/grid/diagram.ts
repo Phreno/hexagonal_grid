@@ -1,8 +1,11 @@
 import { Layout } from './layout';
 import { Hex } from './hex';
+import { Point } from '../hexaction'
+
+type HtmlID = string;
 
 type DrawContext = {
-  canvasContext: CanvasRenderingContext2D
+  canvas: CanvasRenderingContext2D | HtmlID,
   layout: Layout
 }
 
@@ -17,7 +20,8 @@ type DrawStyle = {
   strokeStyle: string; lineWidth: number
 }
 const HEX_CORNERS = 6;
-const HEX_ORIGIN = 5;
+const CORNER_REFERENCE = 5;
+const ORIGIN = 0;
 
 enum Color {
   Stroke = 'black',
@@ -28,44 +32,79 @@ enum Color {
   Hex= 'hsl(0, 0%, 50%)'
 }
 export class Diagram {
-  drawHex ({ canvasContext, layout, hex ,strokeStyle= Color.Stroke,lineWidth= 1 }: DrawHexContext & Partial<DrawStyle>) {
-    const error = [canvasContext, layout, hex].filter(e => !e);
-    if (error) {
-      throw new Error('wrong args provided')
+  /**
+   * Dessine un hexagone sur le canvas
+   * @param {(DrawHexContext & Partial<DrawStyle>)} { canvas, layout, hex ,strokeStyle= Color.Stroke,lineWidth= 1 }
+   * @throws Error
+   * @memberof Diagram
+   */
+  drawHex ({ canvas, layout, hex ,strokeStyle= Color.Stroke,lineWidth= 1 }: DrawHexContext & Partial<DrawStyle>) {
+    const checkMissingArgs = this.checkDrawHexContextMissingArgs({ canvas,layout,hex });
+    let corners: Point[];
+    if (canvas instanceof CanvasRenderingContext2D) {
+      corners = layout.polygonCorners(hex);
+      canvas.beginPath();
+      canvas.strokeStyle = strokeStyle;
+      canvas.lineWidth = lineWidth;
+      canvas.moveTo(corners[CORNER_REFERENCE].x, corners[CORNER_REFERENCE].y);
+      [...Array(HEX_CORNERS).keys()].forEach(index => canvas.lineTo(corners[index].x,
+      corners[index].y))
+      canvas.stroke();
+    } else {
+      throw new Error('wrong canvas type')
     }
-    const corners = layout.polygonCorners(hex);
-    canvasContext.beginPath();
-    canvasContext.strokeStyle = strokeStyle;
-    canvasContext.lineWidth = lineWidth;
-    canvasContext.moveTo(corners[HEX_ORIGIN].x, corners[HEX_ORIGIN].y);
-    [...Array(HEX_CORNERS).keys()].forEach(index => canvasContext.lineTo(corners[index].x,
-    corners[index].y))
-    canvasContext.stroke();
   }
 
+  private checkDrawHexContextMissingArgs ({ canvas,layout,hex }: DrawHexContext) {
+    const checkMissingArgs = [canvas,layout,hex].every(e => e);
+    if (!checkMissingArgs) {
+      throw new Error('missing args')
+    }
+  }
+
+  /**
+   * Défini la couleur d'un hexagone en fonction
+   * de sa position
+   *
+   * @param {Hex} hex
+   * @returns
+   * @memberof Diagram
+   */
   colorForHex (hex: Hex) {
+    this.checkHexArg(hex)
     // Match the color style used in the main article
-    if (hex.q === 0 && hex.r === 0 && hex.s === 0) {
+    if (hex.q === ORIGIN && hex.r === ORIGIN && hex.s === ORIGIN) {
       return Color.GridOrigin;
-    } else if (hex.q === 0) {
+    } else if (hex.q === ORIGIN) {
       return Color.HexQ;
-    } else if (hex.r === 0) {
+    } else if (hex.r === ORIGIN) {
       return Color.HexR;
-    } else if (hex.s === 0) {
+    } else if (hex.s === ORIGIN) {
       return Color.HexS;
     } else {
       return Color.Hex;
     }
   }
 
-  drawHexLabel ({ canvasContext, layout, hex }: DrawHexContext) {
-    const pointSize = Math.round(0.5 * Math.min(Math.abs(layout.size.x), Math.abs(layout.size.y)));
-    const center = layout.hexToPixel(hex);
-    canvasContext.fillStyle = this.colorForHex(hex);
-    canvasContext.font = `${pointSize}px sans-serif`;
-    canvasContext.textAlign = 'center';
-    canvasContext.textBaseline = 'middle';
-    canvasContext.fillText(hex.len() === 0 ? 'q,r,s' : (hex.q + ',' + hex.r + ',' + hex.s), center.x, center.y);
+  private checkHexArg (hex: Hex) {
+    if (!hex) {
+      throw new Error('missing args')
+    }
+  }
+
+  drawHexLabel ({ canvas, layout, hex }: DrawHexContext) {
+    this.checkDrawHexContextMissingArgs({ canvas, layout, hex })
+    if (canvas instanceof CanvasRenderingContext2D) {
+      const pointSize = Math.round(0.5 * Math.min(Math.abs(layout.size.x), Math.abs(layout.size.y)));
+      const center = layout.hexToPixel(hex);
+      canvas.fillStyle = this.colorForHex(hex);
+      canvas.font = `${pointSize}px sans-serif`;
+      canvas.textAlign = 'center';
+      canvas.textBaseline = 'middle';
+      canvas.fillText(hex.len() === 0 ? 'q,r,s' : (hex.q + ',' + hex.r + ',' + hex.s), center.x, center.y);
+    } else {
+      throw new Error('wrong canvas type')
+    }
   }
 
   permuteQRS ({ q, r, s }: Hex) {
@@ -174,8 +213,8 @@ export class Diagram {
     canvasContext.fillRect(0, 0, width, height);
     canvasContext.translate(width / 2, height / 2);
     hexes.forEach((hex) => {
-      this.drawHex({ canvasContext,layout,hex });
-      if (withLabels) this.drawHexLabel({ canvasContext, layout, hex });
+      this.drawHex({ canvas: canvasContext,layout,hex });
+      if (withLabels) this.drawHexLabel({ canvas: canvasContext, layout, hex });
     });
   }
 }
