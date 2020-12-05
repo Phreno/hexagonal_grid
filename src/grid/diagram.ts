@@ -71,7 +71,9 @@ export class Diagram {
    * @memberof Diagram
    */
   colorForHex (hex: Hex) {
-    this.checkHexArg(hex)
+    if (!hex) {
+      throw new Error('missing args')
+    }
     // Match the color style used in the main article
     if (hex.q === ORIGIN && hex.r === ORIGIN && hex.s === ORIGIN) {
       return Color.GridOrigin;
@@ -83,12 +85,6 @@ export class Diagram {
       return Color.HexS;
     } else {
       return Color.Hex;
-    }
-  }
-
-  private checkHexArg (hex: Hex) {
-    if (!hex) {
-      throw new Error('missing args')
     }
   }
 
