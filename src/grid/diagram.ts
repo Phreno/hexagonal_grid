@@ -18,7 +18,7 @@ type DrawStyle = {
   strokeStyle: string; lineWidth: number
 }
 type Permutable = {q: number, r: number, s: number}
-type IPermutable = (hex: Permutable) => {};
+type IPermutable = (hex: Permutable) => Hex;
 
 const HEX_CORNERS = 6;
 const CORNER_REFERENCE = 5;
@@ -104,27 +104,27 @@ export class Diagram {
     }
   }
 
-  permuteQRS ({ q, r, s }: Hex) {
+  permuteQRS ({ q, r, s }: Permutable) {
     return new Hex(q, r, s);
   }
 
-  permuteSRQ ({ q, r, s }: Hex) {
+  permuteSRQ ({ q, r, s }: Permutable) {
     return new Hex(s, r, q);
   }
 
-  permuteSQR ({ q, r, s }: Hex) {
+  permuteSQR ({ q, r, s }: Permutable) {
     return new Hex(s,q,r);
   }
 
-  permuteRQS ({ q, r, s }: Hex) {
+  permuteRQS ({ q, r, s }: Permutable) {
     return new Hex(r,q,s);
   }
 
-  permuteRSQ ({ q, r, s }: Hex) {
+  permuteRSQ ({ q, r, s }: Permutable) {
     return new Hex(r,s,q);
   }
 
-  permuteQSR ({ q, r, s }: Hex) {
+  permuteQSR ({ q, r, s }: Permutable) {
     return new Hex(q,s,r);
   }
 
