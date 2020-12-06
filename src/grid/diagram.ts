@@ -170,16 +170,16 @@ export class Diagram {
     return hexes;
   }
 
-  shapeRectangle (w: number, h: number, constructor: CallableFunction) {
+  shapeRectangle (w: number, h: number, permute: IPermutable) {
     const hexes = [];
     const i1 = -Math.floor(w / 2);
     const i2 = i1 + w;
     const j1 = -Math.floor(h / 2);
     const j2 = j1 + h;
-    for (let j = j1; j < j2; j++) {
-      const jOffset = -Math.floor(j / 2);
-      for (let i = i1 + jOffset; i < i2 + jOffset; i++) {
-        hexes.push(constructor(i, j, -i - j));
+    for (let r = j1; r < j2; r++) {
+      const jOffset = -Math.floor(r / 2);
+      for (let q = i1 + jOffset; q < i2 + jOffset; q++) {
+        hexes.push(permute({ q, r, s: -q - r }));
       }
     }
     return hexes;
