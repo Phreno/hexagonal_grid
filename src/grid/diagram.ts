@@ -8,17 +8,18 @@ type DrawContext = {
   canvas: CanvasRenderingContext2D | HtmlID,
   layout: Layout
 }
-
 type DrawHexContext = DrawContext & {
   hex: Hex
 };
-
 type DrawGridContext = DrawContext & {
   hexes: Hex[]
 }
 type DrawStyle = {
   strokeStyle: string; lineWidth: number
 }
+type Permutable = {q: number, r: number, s: number}
+type IPermutable = (hex: Permutable) => {};
+
 const HEX_CORNERS = 6;
 const CORNER_REFERENCE = 5;
 const ORIGIN = 0;
@@ -127,11 +128,11 @@ export class Diagram {
     return new Hex(q,s,r);
   }
 
-  shapeParallelogram (q1: number, r1: number, q2: number, r2: number, constructor: CallableFunction) {
+  shapeParallelogram (q1: number, r1: number, q2: number, r2: number, permute: IPermutable) {
     const hexes = [];
     for (let q = q1; q <= q2; q++) {
       for (let r = r1; r <= r2; r++) {
-        hexes.push(constructor(q, r, -q - r));
+        hexes.push(permute({ q, r, s: -q - r }));
       }
     }
     return hexes;
