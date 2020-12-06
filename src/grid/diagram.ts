@@ -184,7 +184,7 @@ export class Diagram {
     return hexes;
   }
 
-  drawGrid (id: string, backgroundColor: string, withLabels: boolean, layout: Layout, hexes: Hex[]) {
+  drawGrid (id: string, backgroundColor: string, withLabels: boolean, layout: Layout, hexes?: Hex[]) {
     const canvas = document.getElementById(id) as HTMLCanvasElement;
     if (!canvas) {
       return;
