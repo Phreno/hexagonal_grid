@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --build tsconfig.json",
-    "prepack.hexaction": "npx browserify build/hexaction.js -p esmify --standalone hexaction >> dist/hexaction.bundle.js",
+    "prepack.hexaction": "npx browserify build/hexaction.js -p esmify --standalone hexaction > dist/hexaction.bundle.js",
     "prepack.demo": "npx browserify build/demo/demo.js -p esmify  > demo/demo.js",
     "prepare": "npm run build && npm run prepack.hexaction && npm run prepack.demo && npm run push && npm run start",
     "clean": "rm -rf build",
